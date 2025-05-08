@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Resume</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans flex items-center justify-center min-h-screen p-4">
+  <div class="bg-white shadow-lg rounded-lg w-full max-w-md p-8">
+    <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Upload Your Resume</h1>
+    <p class="text-gray-600 mb-6 text-center">Select your resume and (optionally) a custom job description.</p>
+
+    <form action="{{ url_for('upload_resume') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+     
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">Resume File</label>
+        <input
+          type="file"
+          name="file"
+          accept=".pdf,.doc,.docx"
+          required
+          class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+    
+      <div>
+        <label for="compare_option" class="block text-gray-700 font-medium mb-1">Compare With</label>
+        <select
+          id="compare_option"
+          name="compare_option"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="default" selected>Use Default Job Description</option>
+          <option value="custom">Upload Custom Job Description</option>
+        </select>
+      </div>
+
+     
+      <div id="custom_jd_field" class="hidden">
+        <label class="block text-gray-700 font-medium mb-1">Custom Job Description File</label>
+        <input
+          type="file"
+          name="jd_file"
+          accept=".pdf,.doc,.docx,.txt"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      
+      <div class="text-center">
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white font-semibold py-2 rounded-full hover:bg-blue-700 transition"
+        >
+          Upload Resume
+        </button>
+      </div>
+    </form>
+
+    <div class="mt-6 text-center">
+      <a href="{{ url_for('home') }}" class="text-blue-600 hover:underline">Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+
+    document
+      .getElementById('compare_option')
+      .addEventListener('change', function (e) {
+        const customField = document.getElementById('custom_jd_field');
+        if (e.target.value === 'custom') {
+          customField.classList.remove('hidden');
+        } else {
+          customField.classList.add('hidden');
+        }
+      });
+  </script>
+</body>
+</html>
